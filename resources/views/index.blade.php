@@ -12,7 +12,7 @@
 
     <section class="relative bg-blue-600 text-white pb-20">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between py-20 px-6 mb-10">
-            <div class="md:w-1/3 ml-16">
+            <div class="md:w-1/3 ml-16" style="margin-bottom: 60px;">
                 <h1 class="text-5xl font-extrabold leading-tight mb-6">
                     Welkom bij MijnWebsite
                 </h1>
