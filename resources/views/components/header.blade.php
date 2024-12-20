@@ -1,7 +1,7 @@
 <header class="bg-gray-900 text-white shadow-lg">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <div class="flex items-center">
-            <a href="/" class="text-3xl font-extrabold text-blue-500 hover:text-blue-400 transition">
+            <a href="/" class="text-3xl font-extrabold text-white hover:text-blue-400 transition">
                 MijnWebsite
             </a>
         </div>

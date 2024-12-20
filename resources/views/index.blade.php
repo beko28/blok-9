@@ -11,30 +11,30 @@
     @include('components.header')
 
     <section class="relative bg-blue-600 text-white pb-20">
-    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between py-20 px-6" style="margin-bottom: 100px;">
-        <div class="md:w-1/3" style="margin-left: 60px;">
-            <h1 class="text-5xl font-extrabold leading-tight mb-6">
-                Welkom bij <span class="text-blue-400">MijnWebsite</span>
-            </h1>
-            <p class="text-lg mb-6">
-                Wij leveren creatieve oplossingen en diensten die jouw bedrijf laten groeien. Ontdek wat wij voor jou kunnen betekenen!
-            </p>
-            <a href="#services" class="bg-blue-400 text-blue-600 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-yellow-300 transition duration-300">
-                Bekijk Onze Diensten
-            </a>
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between py-20 px-6 mb-10">
+            <div class="md:w-1/3 ml-16">
+                <h1 class="text-5xl font-extrabold leading-tight mb-6">
+                    Welkom bij MijnWebsite
+                </h1>
+                <p class="text-lg mb-6">
+                    Wij leveren creatieve oplossingen en diensten die jouw bedrijf laten groeien. Ontdek wat wij voor jou kunnen betekenen!
+                </p>
+                <a href="#services" 
+                class="relative z-10 bg-white text-blue-600 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-blue-300 transition duration-500">
+                    Bekijk Onze Diensten
+                </a>
+            </div>
+            <div class="md:w-1/2 mt-10 md:mt-0">
+                <img src="https://via.placeholder.com/600x400" alt="Hero Image" class="rounded-xl shadow-xl">
+            </div>
         </div>
-        <div class="md:w-1/2 mt-10 md:mt-0">
-            <img src="https://via.placeholder.com/600x400" alt="Hero Image" class="rounded-xl shadow-xl">
+
+        <div class="absolute bottom-0 left-0 right-0 translate-y-10">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full">
+                <path fill="#f3f4f6" fill-opacity="1" d="M0,96L40,85.3C80,75,160,53,240,85.3C320,117,400,203,480,234.7C560,267,640,245,720,213.3C800,181,880,139,960,138.7C1040,139,1120,181,1200,176C1280,171,1360,117,1400,90.7L1440,64L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
+            </svg>
         </div>
-    </div>
-
-    <div class="absolute bottom-0 left-0 right-0">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full">
-            <path fill="#f3f4f6" fill-opacity="1" d="M0,96L40,85.3C80,75,160,53,240,85.3C320,117,400,203,480,234.7C560,267,640,245,720,213.3C800,181,880,139,960,138.7C1040,139,1120,181,1200,176C1280,171,1360,117,1400,90.7L1440,64L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
-        </svg>
-    </div>
-</section>
-
+    </section>
 
     <section id="services" class="py-20 bg-gray-100">
         <div class="container mx-auto px-6">
