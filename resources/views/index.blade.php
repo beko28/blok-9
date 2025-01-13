@@ -14,10 +14,10 @@
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between py-20 px-6">
             <div class="md:w-1/2" style="margin-left: 80px; margin-bottom: 60px;">
                 <h1 class="text-6xl font-extrabold leading-tight mb-6">
-                    Ontdek jouw <span class="text-yellow-300">muzikale talent</span>!
+                    Ontdek jouw <span class="text-yellow-300">muzikale </span>talent!
                 </h1>
                 <p class="text-lg mb-6">
-                    Begin jouw reis met <strong>MuziekMeesters</strong>. Kies uit lessen voor piano, gitaar, zang en meer.
+                    Begin jouw reis met <strong><span class="text-yellow-300">MuziekMeesters</span></strong>. Kies uit lessen voor piano, gitaar, zang en meer.
                 </p>
                 <a href="#contact" 
                    class="bg-yellow-300 text-gray-900 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-yellow-400 transition duration-300">
@@ -30,7 +30,7 @@
         </div>
         <div class="absolute bottom-0 left-0 right-0 translate-y-24">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full">
-            <path fill="#f3f4f6" fill-opacity="1" d="M0,96L40,85.3C80,75,160,53,240,85.3C320,117,340,203,400,120.20C500,10,640,245,720,213.3C800,181,880,139,960,138.7C1040,139,1120,181,1200,176C1280,171,1360,117,1400,90.7L1440,64L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
+            <path fill="#f3f4f6" fill-opacity="1" d="M0,96L40,85.3C80,75,160,53,240,85.3C320,117,340,205,400,120.20C500,10,640,245,720,213.3C800,181,880,139,960,138.7C1040,139,1120,181,1200,176C1280,171,1360,117,1400,90.7L1440,64L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
         </svg>
     </div>
 
