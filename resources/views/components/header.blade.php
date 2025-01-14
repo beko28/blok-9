@@ -1,3 +1,5 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
 <header class="sticky top-0 z-50 bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white shadow-xl">
   <div class="container mx-auto flex items-center justify-between px-6 py-4">
     <div class="flex items-center">
@@ -14,9 +16,44 @@
     </nav>
 
     <div class="hidden md:flex items-center space-x-4">
-      <a href="#" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Inloggen</a>
-      <a href="#" class="bg-yellow-400 px-5 py-2 rounded-full text-gray-900 font-semibold hover:bg-yellow-500 transition-colors duration-300 shadow-lg">Registreer</a>
-      <a href="#contact" class="bg-pink-400 px-5 py-2 rounded-full text-gray-800 font-semibold hover:bg-pink-500 transition-colors duration-300 shadow-lg">Schrijf je in</a>
+      <!-- Als gebruiker NIET is ingelogd -->
+      @guest
+        <a 
+          href="{{ route('login.form') }}" 
+          class="hover:text-yellow-400 transition-colors duration-300 font-medium"
+        >
+          Inloggen
+        </a>
+        <a 
+          href="{{ route('registration.index') }}" 
+          class="bg-yellow-400 px-5 py-2 rounded-full text-gray-900 font-semibold 
+                 hover:bg-yellow-500 transition-colors duration-300 shadow-lg"
+        >
+          Registreer
+        </a>
+      @endguest
+      
+      <!-- Als gebruiker WEL is ingelogd -->
+      @auth
+        <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button 
+            type="submit" 
+            class="bg-red-500 px-5 py-2 rounded-full text-white font-semibold 
+                   hover:bg-red-600 transition-colors duration-300 shadow-lg"
+          >
+            Uitloggen
+          </button>
+        </form>
+      @endauth
+
+      <a 
+        href="#contact" 
+        class="bg-pink-400 px-5 py-2 rounded-full text-gray-800 font-semibold 
+               hover:bg-pink-500 transition-colors duration-300 shadow-lg"
+      >
+        Schrijf je in
+      </a>
     </div>
 
     <!-- telefoonenu -->
