@@ -3,7 +3,7 @@
     <div>
       <h2 class="text-2xl font-bold text-white mb-4">Muziekmeesters</h2>
       <p class="text-sm leading-relaxed">
-        Welkom op MijnWebsite. Wij bieden uitstekende diensten die jouw online ervaring naar een hoger niveau tillen.
+        Welkom op Muziekmeesters. Wij bieden uitstekende lessen om jou alles over muziek maken te leren.
       </p>
     </div>
 

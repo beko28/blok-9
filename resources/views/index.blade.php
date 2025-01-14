@@ -19,10 +19,9 @@
                 <p class="text-lg mb-6">
                     Begin jouw reis met <strong><span class="text-yellow-300">MuziekMeesters</span></strong>. Kies uit lessen voor piano, gitaar, zang en meer.
                 </p>
-                <a href="#contact" 
-                   class="bg-yellow-300 text-gray-900 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-yellow-400 transition duration-300">
-                    Schrijf je in
-                </a>
+                <button class="bg-yellow-300 text-gray-900 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-yellow-400 transition duration-300">
+                    <a href="#contact" >Schrijf je in</a>
+                </button>
             </div>
             <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center">
                 <img src="pexels-sebastian-dziomba-762357063-30080460.jpg" class="rounded-xl shadow-xl max-w-lg">
