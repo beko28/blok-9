@@ -10,7 +10,7 @@
 
     @include('components.header')
 
-    <section class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white pb-20">
+    <section id="home" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white pb-20">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between py-20 px-6">
             <div class="md:w-1/2" style="margin-left: 80px; margin-bottom: 60px;">
                 <h1 class="text-6xl font-extrabold leading-tight mb-6">

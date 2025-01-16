@@ -16,7 +16,6 @@
     </nav>
 
     <div class="hidden md:flex items-center space-x-4">
-      <!-- Als gebruiker NIET is ingelogd -->
       @guest
         <a 
           href="{{ route('login.form') }}" 
@@ -33,7 +32,6 @@
         </a>
       @endguest
       
-      <!-- Als gebruiker WEL is ingelogd -->
       @auth
         <form action="{{ route('logout') }}" method="POST">
           @csrf
@@ -47,12 +45,25 @@
         </form>
       @endauth
 
-      <a 
-        href="#contact" 
-        class="bg-pink-400 px-5 py-2 rounded-full text-gray-800 font-semibold 
-               hover:bg-pink-500 transition-colors duration-300 shadow-lg"
-      >
-        Schrijf je in
+      <a href="{{ auth()->check() 
+        ? (auth()->user()->role === 'leraar' 
+            ? route('ldashboard') 
+            : (auth()->user()->role === 'student' 
+                ? route('sdashboard') 
+                : (auth()->user()->role === 'admin' 
+                    ? route('adashboard') 
+                    : '#')))
+        : '#contact' }}" 
+      class="block bg-pink-400 text-gray-800 px-4 py-2 rounded-full text-center font-semibold hover:bg-pink-500 transition-colors duration-300">
+        {{ auth()->check() 
+            ? (auth()->user()->role === 'leraar' 
+                ? 'Leraar Dashboard' 
+                : (auth()->user()->role === 'student' 
+                    ? 'Student Dashboard' 
+                    : (auth()->user()->role === 'admin' 
+                        ? 'Admin Dashboard' 
+                        : 'Schrijf je in')))
+            : 'Schrijf je in' }}
       </a>
     </div>
 
@@ -96,8 +107,25 @@
       <a href="#" class="bg-yellow-400 text-center py-2 rounded-full text-gray-900 font-semibold hover:bg-yellow-500 transition-colors duration-300">
         Registreer
       </a>
-      <a href="#contact" class="block bg-pink-400 text-gray-800 px-4 py-2 rounded-full text-center font-semibold hover:bg-pink-500 transition-colors duration-300">
-        Schrijf je in
+      <a href="{{ auth()->check() 
+        ? (auth()->user()->role === 'leraar' 
+            ? route('ldashboard') 
+            : (auth()->user()->role === 'student' 
+                ? route('sdashboard') 
+                : (auth()->user()->role === 'admin' 
+                    ? route('adashboard') 
+                    : '#')))
+        : '#contact' }}" 
+      class="block bg-pink-400 text-gray-800 px-4 py-2 rounded-full text-center font-semibold hover:bg-pink-500 transition-colors duration-300">
+        {{ auth()->check() 
+            ? (auth()->user()->role === 'leraar' 
+                ? 'Leraar Dashboard' 
+                : (auth()->user()->role === 'student' 
+                    ? 'Student Dashboard' 
+                    : (auth()->user()->role === 'admin' 
+                        ? 'Admin Dashboard' 
+                        : 'Schrijf je in')))
+            : 'Schrijf je in' }}
       </a>
     </div>
   </div>

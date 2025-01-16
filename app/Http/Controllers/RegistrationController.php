@@ -19,7 +19,7 @@ class RegistrationController extends Controller
             'firstname' => 'required',
             'surname'   => 'required',
             'age'       => 'required',
-            'role'      => 'required|in:student,leerkracht',
+            'role'      => 'required|in:student,leraar,admin',
             'email'     => 'required|email|unique:users,email',
             'password'  => 'required|min:6',
         ]);
