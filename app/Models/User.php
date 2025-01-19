@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
-    protected $primaryKey = 'userID';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'firstname',
         'surname',
@@ -25,4 +25,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
 }

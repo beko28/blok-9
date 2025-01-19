@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('timeslots', function (Blueprint $table) {
             $table->id();
-            $table->string('available');
             $table->string('startday');
             $table->string('starttime');
             $table->string('endday');
