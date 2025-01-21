@@ -81,7 +81,7 @@
                 </div>
 
                 <div>
-                    <label class="block mb-1 font-medium text-gray-700">Student of Leerkracht:</label>
+                    <label class="block mb-1 font-medium text-gray-700">Student of Leraar:</label>
                     <div class="flex items-center space-x-6">
                         <label class="inline-flex items-center cursor-pointer">
                             <input
@@ -98,11 +98,11 @@
                             <input
                                 type="radio"
                                 name="role"
-                                value="leerkracht"
+                                value="leraar"
                                 class="h-4 w-4 text-blue-500 border-gray-300 focus:ring-blue-400"
-                                {{ old('role') === 'leerkracht' ? 'checked' : '' }}
+                                {{ old('role') === 'leraar' ? 'checked' : '' }}
                             >
-                            <span class="ml-2 text-gray-700">Leerkracht</span>
+                            <span class="ml-2 text-gray-700">Leraar</span>
                         </label>
                     </div>
                     @error('role')
