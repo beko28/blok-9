@@ -21,7 +21,7 @@ class Course extends Model
         'time'
     ];
 
-    public function timeslot()
+    public function timeslots()
     {
         return $this->belongsTo(Timeslot::class);
     }

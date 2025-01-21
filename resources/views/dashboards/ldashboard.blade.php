@@ -1,117 +1,50 @@
 @include('components.header')
 
-<div class="position-relative" style="background: linear-gradient(45deg, #283c86, #45a247); color: #fff;">
-    <div class="container py-5 text-center">
-        <h1 class="fw-bold display-4 mb-3">Leraarsdashboard</h1>
-        <p class="lead mb-0">Beheer hier je lessen en cursussen en koppel studenten.</p>
-    </div>
-</div>
-
-<div class="container my-5">
-
-    {{-- Statusmelding --}}
-    @if(session('status'))
-        <div class="alert alert-success mt-3">
-            {{ session('status') }}
-        </div>
-    @endif
-
-    {{-- Knop om een nieuwe cursus aan te maken --}}
-    <div class="text-center mb-4">
-        <a href="{{ route('courses.create') }}" class="btn btn-primary shadow-sm">
-            <i class="fas fa-plus me-2"></i> 
-            Nieuwe Les / Cursus
+<div class="container mx-auto px-4 mt-10">
+    <h2 class="text-center text-3xl font-bold mb-6 text-gray-800">Mijn Lessen</h2>
+    <div class="text-center mt-8">
+        <a href="{{ route('courses.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 transition">
+            <i class="fas fa-plus mr-2"></i> Nieuwe Les
         </a>
     </div>
 
-    {{-- Controleer of er cursussen zijn --}}
-    @if($course->count() > 0)
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white d-flex align-items-center">
-                <i class="fas fa-list-ul me-2"></i>
-                <span class="fw-semibold">Overzicht van bestaande cursussen</span>
-            </div>
-
-            <div class="card-body p-0">
-                <table class="table table-striped table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">
-                                <i class="fas fa-book-open me-2"></i>
-                                Naam
-                            </th>
-                            <th scope="col">
-                                <i class="fas fa-calendar-day me-2"></i>
-                                Datum
-                            </th>
-                            <th scope="col">
-                                <i class="fas fa-clock me-2"></i>
-                                Tijd
-                            </th>
-                            <th scope="col">
-                                <i class="fas fa-user-graduate me-2"></i>
-                                Studenten
-                            </th>
-                            <th scope="col">
-                                <i class="fas fa-cogs me-2"></i>
-                                Acties
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($course as $course)
-                            <tr>
-                                <td class="fw-semibold">
-                                    {{ $course->name }}
-                                </td>
-                                <td>
-                                    {{ \Carbon\Carbon::parse($course->date)->format('d-m-Y') }}
-                                </td>
-                                <td>
-                                    {{ \Carbon\Carbon::parse($course->time)->format('H:i') }}
-                                </td>
-                                <td>
-                                    @forelse($course->users as $user)
-                                        <span class="badge rounded-pill bg-secondary me-1 mb-1">
-                                            {{ $user->name }}
-                                        </span>
-                                    @empty
-                                        <em>Geen studenten gekoppeld</em>
-                                    @endforelse
-                                </td>
-                                <td>
-                                    <a href="" 
-                                       class="btn btn-sm btn-outline-warning"
-                                       title="Course bewerken">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    {{-- Example: Delete-knop (optioneel, afhankelijk van je logica) --}}
-                                    {{-- 
-                                    <form action="" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-outline-danger" title="Course verwijderen">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                    --}}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    @else
-        <div class="text-center my-5">
-            <h3 class="fw-bold">Nog geen cursussen gevonden</h3>
-            <p class="text-muted">Klik op de onderstaande knop om je eerste cursus aan te maken.</p>
-            <a href="{{ route('courses.create') }}" class="btn btn-success">
-                <i class="fas fa-plus me-2"></i> 
-                Nieuwe Les / Cursus
+    @if ($courses->isEmpty())
+        <div class="text-center my-10 bg-white shadow-md p-8 rounded-lg">
+            <h3 class="text-2xl font-semibold text-gray-700">Nog geen lessen gevonden</h3>
+            <p class="text-gray-500 mt-2">Klik op de onderstaande knop om je eerste les aan te maken.</p>
+            <a href="{{ route('courses.create') }}" class="mt-4 inline-block bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600 transition">
+                <i class="fas fa-plus mr-2"></i> Nieuwe Les
             </a>
         </div>
+    @else
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" >
+            @foreach ($courses as $course)
+                <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">{{ $course->name }}</h3>
+                        <p class="text-sm text-gray-500 mt-1"><strong>Instrument:</strong> {{ $course->type }}</p>
+                        <p class="text-sm text-gray-500"><strong>Start:</strong> {{ $course->startday ?? 'N.v.t.'}}</p>
+                        <p class="text-sm text-gray-500"><strong>Einde:</strong> {{ $course->endday ?? 'N.v.t.' }}</p>
+                    </div>
+
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="{{ route('courses.edit', $course->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-600 transition">
+                            <i class="fas fa-edit"></i> Bewerken
+                        </a>
+                        <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 transition"
+                                    onclick="return confirm('Weet je zeker dat je deze les wilt verwijderen?')">
+                                <i class="fas fa-trash"></i> Verwijderen
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     @endif
+
 </div>
 
 @include('components.footer')

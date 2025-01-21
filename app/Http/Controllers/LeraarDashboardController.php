@@ -11,8 +11,11 @@ class LeraarDashboardController extends Controller
     public function index()
     {
         $timeslots = Timeslot::with('course')->get();
-        $course = Course::with(['student', 'timeslot'])->get();
-        return view('dashboards.ldashboard', compact('timeslots', 'course'));
+        $courses = Course::with(['timeslots'])
+            ->get();
+    
+        return view('dashboards.ldashboard', compact('timeslots', 'courses'));
     }
+    
 }
 

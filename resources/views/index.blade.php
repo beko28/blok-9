@@ -61,41 +61,6 @@
         </div>
     </section>
 
-    <section id="contact" class="py-20 bg-blue-600 text-white">
-        <div class="container mx-auto px-6" data-aos="fade-up">
-            <h2 class="text-4xl font-bold text-center mb-12">Schrijf je nu in!</h2>
-            <p class="text-center mb-8 text-lg">
-                Vul het onderstaande formulier in en start jouw muzikale avontuur!
-            </p>
-            <form action="/signup" method="POST" class="bg-white text-gray-800 p-8 rounded-lg shadow-lg max-w-lg mx-auto">
-                <div class="mb-4">
-                    <label for="name" class="block text-lg font-semibold">Naam</label>
-                    <input type="text" id="name" name="name" required
-                           class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-lg font-semibold">E-mail</label>
-                    <input type="email" id="email" name="email" required
-                           class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div class="mb-4">
-                    <label for="lesson_type" class="block text-lg font-semibold">Soort les</label>
-                    <select id="lesson_type" name="lesson_type" required
-                            class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <option value="piano">Piano</option>
-                        <option value="gitaar">Gitaar</option>
-                        <option value="viool">Viool</option>
-                        <option value="zang">Zang</option>
-                    </select>
-                </div>
-                <button type="submit"
-                        class="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-600 transition duration-300">
-                    Verstuur Inschrijving
-                </button>
-            </form>
-        </div>
-    </section>
-
     @include('components.footer')
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

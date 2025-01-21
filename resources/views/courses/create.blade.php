@@ -1,145 +1,135 @@
 @include('components.header')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<div class="bg-blue-600 py-10 text-white text-center">
+    <div class="container mx-auto">
+        <h1 class="text-4xl font-bold">Nieuwe Les / Cursus Aanmaken</h1>
+        <p class="text-lg mt-2">Vul de onderstaande gegevens in om een nieuwe les of cursus toe te voegen.</p>
+    </div>
+</div>
 
-<div class="container my-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
+<div class="container mx-auto px-4 mt-10">
+    <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="bg-blue-600 text-white text-center py-3">
+            <h3 class="text-lg font-semibold">Les Details</h3>
+        </div>
+        <div class="p-6">
+            <form action="{{ route('courses.store') }}" method="POST">
+                @csrf
 
-            {{-- Status- of succesboodschap --}}
-            @if(session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
+                <div id="step-1">
+                    <div class="mb-3">
+                        <label for="name" class="block text-lg font-semibold">Naam Les</label>
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Bijv. Pianoles voor beginners" required class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
 
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">
-                        <i class="fas fa-plus me-2"></i>
-                        Nieuwe Les / Cursus Aanmaken
-                    </h4>
-                </div>
-                <div class="card-body">
+                    <div class="mb-4">
+                        <label for="type" class="block text-lg font-semibold">Instrument</label>
+                        <select name="type" id="type" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                            <option value="" disabled selected>Kies een instrument...</option>
+                            <option value="Gitaar">Gitaar</option>
+                            <option value="Piano">Piano</option>
+                            <option value="Viool">Viool</option>
+                            <option value="Zang">Zang</option>
+                        </select>
+                    </div>
 
-                    {{-- Validatiefouten --}}
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <strong>Oeps!</strong> Er ging iets mis bij het opslaan. Controleer de volgende punten:
-                            <ul class="mb-0 mt-2">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form action="{{ route('courses.store') }}" method="POST">
-                        @csrf
-
-                        {{-- Naam --}}
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">
-                                Naam les / cursus
+                    <div class="mb-4">
+                        <label for="trail" class="block text-lg font-semibold">Is het een proefles?</label>
+                        <div class="flex gap-4 mt-2">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="trail" value="Ja" class="hidden peer">
+                                <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-blue-500">
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                </div>
+                                <span class="ml-2 text-gray-700">Ja</span>
                             </label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}"
-                                placeholder="Bijv. Pianoles voor beginners"
-                                required
-                            >
-                            @error('name')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        
-                        <label for="trail">Is het een proefles?</label>
-                        <input type="text" name="trail" id="trail" />
-
-
-                        {{-- Beschrijving --}}
-                        <div class="mb-3">
-                            <label for="description" class="form-label fw-semibold">Beschrijving</label>
-                            <textarea
-                                name="description"
-                                id="description"
-                                class="form-control @error('description') is-invalid @enderror"
-                                rows="4"
-                                placeholder="Vertel iets meer over de inhoud van deze les/cursus..."
-                            >{{ old('description') }}</textarea>
-                            @error('description')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        {{-- Type (piano, gitaar, zang, drums, etc.) --}}
-                        <div class="mb-3">
-                            <label for="type" class="form-label fw-semibold">
-                                Type
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="trail" value="Nee" class="hidden peer">
+                                <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-blue-500">
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                </div>
+                                <span class="ml-2 text-gray-700">Nee</span>
                             </label>
-                            <input
-                                type="text"
-                                name="type"
-                                id="type"
-                                class="form-control @error('type') is-invalid @enderror"
-                                value="{{ old('type') }}"
-                                placeholder="Bijv. Piano, Gitaar, Zang..."
-                            >
-                            @error('type')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
                         </div>
+                    </div>
 
-                        <label for="startday">Startdag</label>
-                        <input type="text" name="startday" id="startday" />
-
-                        <label for="starttime">Starttijd</label>
-                        <input type="text" name="starttime" id="starttime" />
-
-                        <label for="endday">Einddag</label>
-                        <input type="text" name="endday" id="endday" />
-
-                        <label for="endtime">Eindtijd</label>
-                        <input type="text" name="endtime" id="endtime" />
-
-                        {{-- Studenten selecteren --}}
-                        <div class="mb-4">
-                            <label for="userIDs" class="form-label fw-semibold">
-                                Selecteer Studenten
-                            </label>
-                            <select
-                                name="userIDs[]"
-                                id="userIDs"
-                                class="form-control @error('userIDs') is-invalid @enderror"
-                                multiple
-                            >
-                                @foreach($students as $student)
-                                    <option value="{{ $student->id }}">{{ $student->name }}</option>
-                                @endforeach
-                            </select>
-                            <small class="form-text text-muted">
-                                Houd <kbd>Ctrl</kbd> of <kbd>Cmd</kbd> ingedrukt om meerdere studenten te selecteren.
-                            </small>
-                            @error('userIDs')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        {{-- Knop om het formulier te versturen --}}
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-check me-1"></i>
-                            Aanmaken
-                        </button>
-                        <a href="{{ route('ldashboard') }}" class="btn btn-link text-muted">
-                            Annuleren
-                        </a>
-                    </form>
+                    <button type="button" id="next-step" class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
+                        Volgende
+                    </button>
                 </div>
-            </div>
+
+                <div id="step-2" class="hidden">
+                    <h2 class="text-xl font-semibold mb-4">Stap 2: Kies de lesdatum en tijd</h2>
+
+                    <div class="mb-4">
+                        <label for="startday" class="block text-lg font-semibold">Startdag</label>
+                        <input type="text" name="startday" id="startday" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer startdatum">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="endday" class="block text-lg font-semibold">Einddag</label>
+                        <input type="text" name="endday" id="endday" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer einddatum">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="starttime" class="block text-lg font-semibold">Starttijd</label>
+                        <input type="text" name="starttime" id="starttime" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer starttijd">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="endtime" class="block text-lg font-semibold">Eindtijd</label>
+                        <input type="text" name="endtime" id="endtime" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer eindtijd">
+                    </div>
+
+                    <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition">
+                        Aanmaken
+                    </button>
+                    <button type="button" id="prev-step" class="w-full mt-2 bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400 transition">
+                        Vorige
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 @include('components.footer')
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const nextStep = document.getElementById('next-step');
+        const prevStep = document.getElementById('prev-step');
+
+        nextStep.addEventListener('click', function () {
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+        });
+
+        prevStep.addEventListener('click', function () {
+            step2.classList.add('hidden');
+            step1.classList.remove('hidden');
+        });
+
+        flatpickr("#startday", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+            locale: "nl",
+        });
+
+        flatpickr("#endday", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+            locale: "nl"
+        });
+
+        flatpickr("#starttime", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        });
+    });
+</script>

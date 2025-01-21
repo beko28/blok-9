@@ -12,10 +12,23 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::with('users')->get();
-
-        return view('dashboards.ldashboard', compact('courses'));
+        $courses = Course::where('user_id', auth()->id())->get();
+        return view('ldashboard', compact('courses'));
     }
+
+    public function destroy($id)
+    {
+        $course = Course::where('id', $id)->where('user_id', auth()->id())->first();
+
+        if (!$course) {
+            return redirect()->route('ldashboard')->with('error', 'Je hebt geen rechten om deze les te verwijderen.');
+        }
+
+        $course->delete();
+
+        return redirect()->route('ldashboard');
+    }
+    
 
     public function create()
     {
