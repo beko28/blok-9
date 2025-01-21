@@ -9,10 +9,18 @@ class Timeslot extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'time'];
+    protected $table = 'timeslots';
 
-    public function courses()
+    protected $fillable = [
+        'startday',
+        'starttime',
+        'endday',
+        'endtime',
+    ];
+
+    public function course()
     {
-        return $this->hasMany(Course::class);
+        return $this->belongsTo(Course::class, 'courses_id');
     }
+    
 }
