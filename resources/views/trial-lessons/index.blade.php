@@ -17,7 +17,7 @@
                 <tbody class="text-gray-700 text-sm">
                     @foreach ($trialLessons as $trialLesson)
                         <tr class="border-b border-gray-200">
-                            <td class="py-4 px-6">{{ $trialLesson->teacher->name }}</td>
+                            <td class="py-4 px-6">{{ $trialLesson->teacher->firstname }}</td>
                             <td class="py-4 px-6 font-semibold text-{{ $trialLesson->status == 'approved' ? 'green' : ($trialLesson->status == 'rejected' ? 'red' : 'yellow') }}-600">
                                 {{ ucfirst($trialLesson->status) }}
                             </td>

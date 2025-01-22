@@ -13,10 +13,8 @@ class NotificationController extends Controller
 
         if (auth()->check()) {
             if (auth()->user()->role === 'leraar') {
-                // Tel hoeveel proeflesverzoeken de leraar heeft
                 $notifications = TrialLesson::where('teacher_id', auth()->id())->where('status', 'pending')->count();
             } elseif (auth()->user()->role === 'admin') {
-                // Tel hoeveel openstaande proeflesverzoeken er zijn voor admin
                 $notifications = TrialLesson::where('status', 'pending')->count();
             }
         }

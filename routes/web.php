@@ -63,3 +63,7 @@ Route::post('/trial-lessons/{trialLesson}/approve', [TrialLessonController::clas
 Route::post('/trial-lessons/{trialLesson}/reject', [TrialLessonController::class, 'reject'])->name('trial-lessons.reject'); // Weigeren
 
 Route::get('/notifications', [NotificationController::class, 'getNotifications'])->name('notifications.get');
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/student/trial-lessons', [TrialLessonController::class, 'index'])->name('student.trial-lessons');
+});

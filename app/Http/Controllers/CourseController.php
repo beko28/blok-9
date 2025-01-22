@@ -114,12 +114,10 @@ class CourseController extends Controller
 
 public function show(Course $course)
 {
-    // Zorg ervoor dat alleen de docent of een ingeschreven student de cursusdetails kan zien
     if (auth()->user()->role !== 'admin' && auth()->id() !== $course->user_id && !$course->students->contains(auth()->id())) {
         return redirect()->route('ldashboard')->with('error', 'Je hebt geen toegang tot deze cursus.');
     }
 
-    // Haal alle studenten op uit de database
     $students = User::where('role', 'student')->get();
 
     return view('courses.show', compact('course', 'students'));

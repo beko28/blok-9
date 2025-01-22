@@ -12,7 +12,8 @@
         @foreach ($teachers as $teacher)
             <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
                 <div>
-                    <h3 class="text-xl font-bold text-gray-800">{{ $teacher->name }}</h3>
+                    <h3 class="text-xl font-bold text-gray-800">{{ $teacher->firstname }}</h3>
+                    <h3 class="text-xl font-bold text-gray-800">{{ $teacher->surname }}</h3>
                     <p class="text-sm text-gray-500 mt-1"><strong>E-mail:</strong> {{ $teacher->email }}</p>
                 </div>
 
