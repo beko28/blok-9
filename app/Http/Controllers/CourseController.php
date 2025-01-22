@@ -16,26 +16,13 @@ class CourseController extends Controller
         return view('dashboards.ldashboard', compact('courses'));
     }
 
-    public function destroy($id)
-    {
-        try {
-            $course = Course::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
-    
-            $course->delete();
-    
-            return redirect()->route('ldashboard')->with('success', 'Les succesvol verwijderd.');
-        } catch (\Exception $e) {
-            return redirect()->route('ldashboard')->with('error', 'Les niet gevonden of je hebt geen rechten.');
-        }
-    }
-    
     public function create()
     {
         $students = User::where('role', 'student')->get();
-
+        
         return view('courses.create', compact('students'));
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -48,7 +35,7 @@ class CourseController extends Controller
             'endtime'     => 'nullable|date_format:H:i',
             'duur'        => 'nullable|string',
         ]);
-    
+        
         Course::create([
             'name'        => $request->input('name'),
             'type'        => $request->input('type'),
@@ -60,38 +47,101 @@ class CourseController extends Controller
             'duur'        => $request->input('duur'),
             'user_id'     => auth()->id(),
         ]);
-    
-        return redirect()->route('courses.index')->with('success', 'Nieuwe les is aangemaakt!');
+        
+        return redirect()->route('courses.index');
     }
-
+    
     public function edit(Course $course)
     {
-        $students = User::where('role', 'student')->get();
+        if ($course->user_id !== auth()->id()) {
+            return redirect()->route('ldashboard');
+        }
+        
 
+        $students = User::where('role', 'student')->get();
+        
         return view('courses.edit', compact('course', 'students'));
     }
-
+    
     public function update(Request $request, Course $course)
     {
+        
+        if ($course->user_id !== auth()->id()) {
+            return redirect()->route('ldashboard');
+        }
+        
         $data = $request->validate([
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|in:Piano,Gitaar,Drums,Zang',
             'description' => 'nullable|string',
-            'date'        => 'required|date',
-            'time'        => 'required',
-            'type'       => 'nullable|string',
-            'userIDs'     => 'nullable|array',
-            'userIDs.*'   => 'exists:users,id',
+            'startday' => 'required|date',
+            'endday' => 'nullable|date|after_or_equal:startday',
         ]);
-
+        
         $course->update($data);
-
-        if (isset($data['userIDs'])) {
-            $course->users()->sync($data['userIDs']);
-        } else {
-            $course->users()->detach();
+        
+        return redirect()->route('ldashboard');
+    }
+    
+    public function destroy(Course $course)
+    {
+        if ($course->user_id !== auth()->id()) {
+            return redirect()->route('ldashboard');
         }
 
-        return redirect()->route('ldashboard')
-            ->with('status', 'Course is bijgewerkt!');
+        
+        $course->delete();
+        
+        return redirect()->route('ldashboard');
     }
+
+    public function enroll($id)
+{
+    $course = Course::findOrFail($id);
+
+    if (auth()->user()->role !== 'student') {
+        return redirect()->route('courses.index')->with('error', 'Alleen studenten kunnen zich inschrijven voor cursussen.');
+    }
+
+    if (auth()->user()->courses()->where('course_id', $id)->exists()) {
+        return redirect()->route('courses.index')->with('error', 'Je bent al ingeschreven voor deze cursus.');
+    }
+
+    auth()->user()->courses()->attach($course);
+
+    return redirect()->route('courses.index')->with('success', 'Je bent succesvol ingeschreven voor de cursus!');
 }
+
+public function show(Course $course)
+{
+    // Zorg ervoor dat alleen de docent of een ingeschreven student de cursusdetails kan zien
+    if (auth()->user()->role !== 'admin' && auth()->id() !== $course->user_id && !$course->students->contains(auth()->id())) {
+        return redirect()->route('ldashboard')->with('error', 'Je hebt geen toegang tot deze cursus.');
+    }
+
+    // Haal alle studenten op uit de database
+    $students = User::where('role', 'student')->get();
+
+    return view('courses.show', compact('course', 'students'));
+}
+
+public function updateStudents(Request $request, Course $course)
+{
+    if (auth()->id() !== $course->user_id) {
+        return redirect()->route('courses.show', $course->id)->with('error', 'Je hebt geen rechten om deze cursus te bewerken.');
+    }
+
+    $request->validate([
+        'studentIDs'   => 'nullable|array',
+        'studentIDs.*' => 'exists:users,id',
+    ]);
+
+    $course->students()->sync($request->input('studentIDs', []));
+
+    return redirect()->route('courses.show', $course->id)->with('success', 'Studenten succesvol bijgewerkt!');
+}
+
+
+
+}
+

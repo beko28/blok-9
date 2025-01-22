@@ -10,25 +10,25 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'users_id',
-        'feedback_id',
+        'name',
         'type',
         'duur',
         'description',
-        'name',
         'startday',
         'starttime',
         'endday',
         'endtime',
+        'user_id',
     ];
 
-    public function student()
+    public function teacher()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
-    public function user()
+
+    public function students()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'course_user');
     }
+    
 }

@@ -63,26 +63,6 @@
             </div>
 
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Is het een proefles?</label>
-                <div class="flex gap-4">
-                    <label class="flex items-center cursor-pointer">
-                        <input type="radio" name="trail" value="1" class="hidden peer" {{ $course->trail ? 'checked' : '' }}>
-                        <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-blue-500">
-                            <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
-                        </div>
-                        <span class="ml-2 text-gray-700">Ja</span>
-                    </label>
-                    <label class="flex items-center cursor-pointer">
-                        <input type="radio" name="trail" value="0" class="hidden peer" {{ !$course->trail ? 'checked' : '' }}>
-                        <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-blue-500">
-                            <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
-                        </div>
-                        <span class="ml-2 text-gray-700">Nee</span>
-                    </label>
-                </div>
-            </div>
-
-            <div>
                 <label for="description" class="block text-sm font-semibold text-gray-700 mb-1">Beschrijving</label>
                 <textarea
                     name="description"

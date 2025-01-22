@@ -98,9 +98,6 @@
       <a href="#" class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium">
         Inloggen
       </a>
-      <a href="#" class="bg-yellow-400 text-center py-2 rounded-full text-gray-900 font-semibold hover:bg-yellow-500 transition-colors duration-300">
-        Registreer
-      </a>
       <a href="{{ auth()->check() 
         ? (auth()->user()->role === 'leraar' 
             ? route('ldashboard') 

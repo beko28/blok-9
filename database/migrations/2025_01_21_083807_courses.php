@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('type', ['Piano', 'Gitaar', 'Zang', 'Drums'])->nullable();
+            $table->enum('type', ['Piano', 'Gitaar', 'Zang', 'Drums'])->nullable();//TODO:MAKE THIS INTO A SEPERATE TABLE
             $table->text('description')->nullable();
             $table->string('duur')->nullable();
             $table->date('startday');

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('text');
             $table->timestamps();
-            $table->integer('courseID')->nullable();
-            $table->integer('userID')->nullable();
+            $table->integer('course_id')->nullable();
+            $table->integer('user_id')->nullable();
         });
     }
 

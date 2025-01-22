@@ -9,7 +9,7 @@ class LeraarDashboardController extends Controller
 {
     public function index()
     {
-        $courses = Course::all();
+        $courses = Course::where('user_id', auth()->id())->get();
     
         return view('dashboards.ldashboard', compact('courses'));
     }

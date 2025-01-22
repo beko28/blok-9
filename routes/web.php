@@ -37,8 +37,16 @@ Route::get('/courses/create', [CourseController::class, 'create'])->name('course
 Route::post('/courses/store', [CourseController::class, 'store'])->name('courses.store');
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
 Route::put('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
-Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
+Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
+
 
 //overzichten
 Route::get('/studenten', [UserController::class, 'studentenOverzicht'])->name('studenten.index');
 Route::get('/courses', [CourseOverviewController::class, 'index'])->name('courses.index');
+
+//studenten aanmelden aan lessen
+Route::post('/courses/{course}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
+
+Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+
+Route::put('/courses/{course}/update-students', [CourseController::class, 'updateStudents'])->name('courses.updateStudents');
