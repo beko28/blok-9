@@ -30,4 +30,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class);
     }
+
+    public function studentenOverzicht()
+    {
+        $studenten = User::where('role', 'student')->get();
+        return view('studenten.index', compact('studenten'));
+    }
 }

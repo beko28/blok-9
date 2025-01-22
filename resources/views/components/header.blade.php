@@ -11,10 +11,10 @@
 
     <nav class="hidden md:flex items-center space-x-6">
       <a href="/" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Home</a>
-      <a href="#about" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Over Ons</a>
       <a href="#services" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Diensten</a>
-      <a href="#contact" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Contact</a>
-    </nav>
+      <a href="{{ route('studenten.index') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Studenten</a>
+      <a href="{{ route('courses.index') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Lessen</a>
+      </nav>
 
     <div class="hidden md:flex items-center space-x-4">
       @guest

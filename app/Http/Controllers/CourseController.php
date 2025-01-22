@@ -13,23 +13,22 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::where('user_id', auth()->id())->get();
-        return view('ldashboard', compact('courses'));
+        return view('dashboards.ldashboard', compact('courses'));
     }
 
     public function destroy($id)
     {
-        $course = Course::where('id', $id)->where('user_id', auth()->id())->first();
-
-        if (!$course) {
-            return redirect()->route('ldashboard')->with('error', 'Je hebt geen rechten om deze les te verwijderen.');
+        try {
+            $course = Course::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+    
+            $course->delete();
+    
+            return redirect()->route('ldashboard')->with('success', 'Les succesvol verwijderd.');
+        } catch (\Exception $e) {
+            return redirect()->route('ldashboard')->with('error', 'Les niet gevonden of je hebt geen rechten.');
         }
-
-        $course->delete();
-
-        return redirect()->route('ldashboard');
     }
     
-
     public function create()
     {
         $students = User::where('role', 'student')->get();
@@ -39,25 +38,30 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        $timeslot = Timeslot::create([
-            'startday'  => $request->input('startday'),
-            'starttime' => $request->input('starttime'),
-            'endday'    => $request->input('endday'),
-            'endtime'   => $request->input('endtime'),
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'type'        => 'required|string|in:Piano,Gitaar,Zang,Drums',
+            'description' => 'nullable|string',
+            'startday'    => 'required|date',
+            'starttime'   => 'required|date_format:H:i',
+            'endday'      => 'nullable|date',
+            'endtime'     => 'nullable|date_format:H:i',
+            'duur'        => 'nullable|string',
         ]);
     
-        $course = Course::create([
+        Course::create([
             'name'        => $request->input('name'),
             'type'        => $request->input('type'),
-            'trail'       => $request->input('trail'),
             'description' => $request->input('description'),
-            'timeslotID'  => $timeslot->id,
+            'startday'    => $request->input('startday'),
+            'starttime'   => $request->input('starttime'),
+            'endday'      => $request->input('endday'),
+            'endtime'     => $request->input('endtime'),
+            'duur'        => $request->input('duur'),
+            'user_id'     => auth()->id(),
         ]);
-
-        return redirect()
-        ->route('ldashboard')
-        ->with('status', 'Nieuwe les is aangemaakt!');
     
+        return redirect()->route('courses.index')->with('success', 'Nieuwe les is aangemaakt!');
     }
 
     public function edit(Course $course)
@@ -74,7 +78,6 @@ class CourseController extends Controller
             'description' => 'nullable|string',
             'date'        => 'required|date',
             'time'        => 'required',
-            'timeslotID' => 'nullable|exists:timeslots,id',
             'type'       => 'nullable|string',
             'userIDs'     => 'nullable|array',
             'userIDs.*'   => 'exists:users,id',
