@@ -32,7 +32,6 @@
             <path fill="#f3f4f6" fill-opacity="1" d="M0,96L40,85.3C80,75,160,53,240,85.3C320,117,340,205,400,120.20C500,10,640,245,720,213.3C800,181,880,139,960,138.7C1040,139,1120,181,1200,176C1280,171,1360,117,1400,90.7L1440,64L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
         </svg>
     </div>
-
     </section>
 
     <section id="services" class="py-20 bg-gray-100">
@@ -61,13 +60,31 @@
         </div>
     </section>
 
+    <section id="testimonials" class="py-20 bg-white" data-aos="fade-up">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-blue-600 mb-12">⭐ Wat onze studenten zeggen</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                    <p class="text-gray-700 italic">"De lessen zijn superleuk en ik leer elke week iets nieuws!"</p>
+                    <h4 class="text-blue-600 font-semibold mt-4">- Emma, 12 jaar</h4>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                    <p class="text-gray-700 italic">"Mijn docent is echt geweldig en motiveert mij enorm."</p>
+                    <h4 class="text-blue-600 font-semibold mt-4">- Tom, 24 jaar</h4>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                    <p class="text-gray-700 italic">"Eindelijk kan ik mijn favoriete liedjes spelen!"</p>
+                    <h4 class="text-blue-600 font-semibold mt-4">- Lisa, 18 jaar</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
     @include('components.footer')
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script>
-        AOS.init();
-    </script>
+    <script> AOS.init(); </script>
 
 </body>
 </html>
