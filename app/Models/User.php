@@ -37,4 +37,15 @@ class User extends Authenticatable
         $studenten = User::where('role', 'student')->get();
         return view('studenten.index', compact('studenten'));
     }
+
+    public function trialLessonsAsStudent()
+{
+    return $this->hasMany(TrialLesson::class, 'student_id');
+}
+
+public function trialLessonsAsTeacher()
+{
+    return $this->hasMany(TrialLesson::class, 'teacher_id');
+}
+
 }
