@@ -17,7 +17,7 @@
             </a>
         </div>
     @else
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" >
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             @foreach ($courses as $course)
                 <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
                     <div>
@@ -28,6 +28,9 @@
                     </div>
 
                     <div class="mt-4 flex justify-between items-center">
+                        <a href="{{ route('courses.show', $course->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
                         <a href="{{ route('courses.edit', $course->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-600 transition">
                             <i class="fas fa-edit"></i> Bewerken
                         </a>
@@ -44,7 +47,6 @@
             @endforeach
         </div>
     @endif
-
 </div>
 
 @include('components.footer')

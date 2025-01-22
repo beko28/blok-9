@@ -1,5 +1,7 @@
 @include('components.header')
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 <div class="bg-blue-600 py-10 text-white text-center">
     <div class="container mx-auto">
         <h1 class="text-4xl font-bold">Nieuwe Les / Cursus Aanmaken</h1>
@@ -13,44 +15,38 @@
             <h3 class="text-lg font-semibold">Les Details</h3>
         </div>
         <div class="p-6">
+            @if ($errors->any())
+                <div class="bg-red-200 text-red-800 p-4 mb-4 rounded">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('courses.store') }}" method="POST">
                 @csrf
 
                 <div id="step-1">
                     <div class="mb-3">
                         <label for="name" class="block text-lg font-semibold">Naam Les</label>
-                        <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Bijv. Pianoles voor beginners" required class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Bijv. Pianoles voor beginners" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="block text-lg font-semibold">Beschrijving</label>
+                        <input type="text" name="description" id="description" value="{{ old('description') }}" placeholder="Vertel hier iets over de les." required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
 
                     <div class="mb-4">
                         <label for="type" class="block text-lg font-semibold">Instrument</label>
-                        <select name="type" id="type" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <select name="type" id="type" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="" disabled selected>Kies een instrument...</option>
                             <option value="Gitaar">Gitaar</option>
                             <option value="Piano">Piano</option>
-                            <option value="Viool">Viool</option>
                             <option value="Zang">Zang</option>
+                            <option value="Drums">Drums</option>
                         </select>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="trail" class="block text-lg font-semibold">Is het een proefles?</label>
-                        <div class="flex gap-4 mt-2">
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="trail" value="Ja" class="hidden peer">
-                                <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-blue-500">
-                                    <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
-                                </div>
-                                <span class="ml-2 text-gray-700">Ja</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="trail" value="Nee" class="hidden peer">
-                                <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:bg-blue-500">
-                                    <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
-                                </div>
-                                <span class="ml-2 text-gray-700">Nee</span>
-                            </label>
-                        </div>
                     </div>
 
                     <button type="button" id="next-step" class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
@@ -63,22 +59,27 @@
 
                     <div class="mb-4">
                         <label for="startday" class="block text-lg font-semibold">Startdag</label>
-                        <input type="text" name="startday" id="startday" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer startdatum">
+                        <input type="text" name="startday" id="startday" value="{{ old('startday') }}" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer startdatum">
                     </div>
 
                     <div class="mb-4">
                         <label for="endday" class="block text-lg font-semibold">Einddag</label>
-                        <input type="text" name="endday" id="endday" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer einddatum">
+                        <input type="text" name="endday" id="endday" value="{{ old('endday') }}" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer einddatum">
                     </div>
 
                     <div class="mb-4">
                         <label for="starttime" class="block text-lg font-semibold">Starttijd</label>
-                        <input type="text" name="starttime" id="starttime" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer starttijd">
+                        <input type="text" name="starttime" id="starttime" value="{{ old('starttime') }}" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer starttijd">
                     </div>
 
                     <div class="mb-4">
                         <label for="endtime" class="block text-lg font-semibold">Eindtijd</label>
-                        <input type="text" name="endtime" id="endtime" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer eindtijd">
+                        <input type="text" name="endtime" id="endtime" value="{{ old('endtime') }}" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Selecteer eindtijd">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="duur" class="block text-lg font-semibold">Duur</label>
+                        <input type="text" name="duur" id="duur" value="{{ old('duur') }}" required placeholder="Bijv. 8 weken" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
 
                     <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition">
@@ -113,19 +114,13 @@
             step1.classList.remove('hidden');
         });
 
-        flatpickr("#startday", {
+        flatpickr("#startday, #endday", {
             enableTime: false,
             dateFormat: "Y-m-d",
             locale: "nl",
         });
 
-        flatpickr("#endday", {
-            enableTime: false,
-            dateFormat: "Y-m-d",
-            locale: "nl"
-        });
-
-        flatpickr("#starttime", {
+        flatpickr("#starttime, #endtime", {
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i",

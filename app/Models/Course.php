@@ -10,29 +10,25 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'timeslotID',
-        'usersID',
-        'feedback',
-        'type',
-        'trail',
-        'description',
         'name',
-        'date',
-        'time'
+        'type',
+        'duur',
+        'description',
+        'startday',
+        'starttime',
+        'endday',
+        'endtime',
+        'user_id',
     ];
 
-    public function timeslots()
+    public function teacher()
     {
-        return $this->belongsTo(Timeslot::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function student()
+    public function students()
     {
-        return $this->belongsTo(User::class, 'userID');
+        return $this->belongsToMany(User::class, 'course_user');
     }
     
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
 }
