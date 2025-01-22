@@ -11,10 +11,27 @@
 
     <nav class="hidden md:flex items-center space-x-6">
       <a href="/" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Home</a>
-      <a href="#about" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Over Ons</a>
-      <a href="#services" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Diensten</a>
-      <a href="#contact" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Contact</a>
-    </nav>
+        <a href="{{ route('teachers.index') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Leraren</a>
+      <a href="{{ route('studenten.index') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Studenten</a>
+      <a href="{{ route('courses.index') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Lessen</a>
+
+      @auth
+        @if(auth()->user()->role === 'student')
+          <a href="{{ route('trial-lessons.index') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Mijn Proeflessen</a>
+        @endif
+
+        @if(auth()->user()->role === 'leraar')
+          <a href="{{ route('teacher.trial-lessons') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium relative">
+            Beheer Proeflessen
+            <span id="notification-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full hidden"></span>
+          </a>
+        @endif
+
+        @if(auth()->user()->role === 'admin')
+          <a href="{{ route('admin.dashboard') }}" class="hover:text-yellow-400 transition-colors duration-300 font-medium">Admin Dashboard</a>
+        @endif
+      @endauth
+      </nav>
 
     <div class="hidden md:flex items-center space-x-4">
       @guest
@@ -98,9 +115,6 @@
       <a href="#" class="text-white hover:text-yellow-400 transition-colors duration-300 font-medium">
         Inloggen
       </a>
-      <a href="#" class="bg-yellow-400 text-center py-2 rounded-full text-gray-900 font-semibold hover:bg-yellow-500 transition-colors duration-300">
-        Registreer
-      </a>
       <a href="{{ auth()->check() 
         ? (auth()->user()->role === 'leraar' 
             ? route('ldashboard') 
@@ -139,4 +153,25 @@
       setTimeout(() => mobileMenu.classList.add("hidden"), 300);
     }
   });
+
+  function fetchNotifications() {
+    fetch("{{ route('notifications.get') }}")
+      .then(response => response.json())
+      .then(data => {
+        if (data.count > 0) {
+          document.getElementById("notification-badge").innerText = data.count;
+          document.getElementById("notification-badge").classList.remove("hidden");
+
+          document.getElementById("admin-notification-badge").innerText = data.count;
+          document.getElementById("admin-notification-badge").classList.remove("hidden");
+        } else {
+          document.getElementById("notification-badge").classList.add("hidden");
+          document.getElementById("admin-notification-badge").classList.add("hidden");
+        }
+      })
+      .catch(error => console.error("Error fetching notifications:", error));
+  }
+
+  setInterval(fetchNotifications, 10000);
+  fetchNotifications();
 </script>
