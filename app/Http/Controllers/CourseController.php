@@ -130,16 +130,14 @@ public function updateStudents(Request $request, Course $course)
     }
 
     $request->validate([
-        'studentIDs'   => 'nullable|array',
-        'studentIDs.*' => 'exists:users,id',
+        'student_ids'   => 'nullable|array',
+        'student_ids.*' => 'exists:users,id',
     ]);
 
-    $course->students()->sync($request->input('studentIDs', []));
+    $course->students()->sync($request->input('student_ids', []));
 
     return redirect()->route('courses.show', $course->id)->with('success', 'Studenten succesvol bijgewerkt!');
 }
-
-
 
 }
 

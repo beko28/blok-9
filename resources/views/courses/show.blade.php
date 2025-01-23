@@ -18,25 +18,41 @@
         <div class="mt-4 bg-white shadow-md rounded-lg p-6">
             <ul class="list-disc list-inside text-gray-700">
                 @foreach ($course->students as $student)
-                    <li class="py-2"><strong>{{ $student->name }}</strong> - {{ $student->email }}</li>
+                    <li class="py-2"><strong>{{ $student->firstname }} {{ $student->surname }}</strong> - {{ $student->email }}</li>
                 @endforeach
             </ul>
         </div>
     @endif
 
-    @auth
-        {{-- Controleer of de ingelogde gebruiker is ingeschreven --}}
-        @if(auth()->user()->courses->contains($course->id))
-            <form action="{{ route('courses.unenroll', $course->id) }}" method="POST" class="mt-6">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                    class="bg-red-500 text-white px-6 py-3 rounded-lg shadow hover:bg-red-600 transition">
-                    ❌ Uitschrijven
-                </button>
-            </form>
-        @endif
-    @endauth
+    <button id="toggle-student-list"
+        class="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 transition">
+        👥 Beheer Studenten
+    </button>
+
+    <div id="student-list" class="mt-4 bg-white shadow-md rounded-lg p-6 hidden">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">📝 Voeg studenten toe of verwijder ze</h3>
+
+        <form action="{{ route('courses.updateStudents', $course->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="max-h-60 overflow-y-auto">
+                @foreach ($students as $student)
+                    <div class="flex items-center py-2">
+                        <input type="checkbox" name="student_ids[]" value="{{ $student->id }}"
+                            class="mr-2 rounded border-gray-300"
+                            @if($course->students->contains($student->id)) checked @endif>
+                        <span>{{ $student->firstname }} {{ $student->surname }} - {{ $student->email }}</span>
+                    </div>
+                @endforeach
+            </div>
+
+            <button type="submit"
+                class="mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600 transition">
+                ✅ Opslaan
+            </button>
+        </form>
+    </div>
 
     <div class="mt-6">
         <a href="{{ route('ldashboard') }}" class="bg-gray-500 text-white px-6 py-3 rounded-lg shadow hover:bg-gray-600 transition">
@@ -46,3 +62,11 @@
 </div>
 
 @include('components.footer')
+
+<!-- ✅ JavaScript voor het tonen/verbergen van de studentenlijst -->
+<script>
+    document.getElementById('toggle-student-list').addEventListener('click', function () {
+        let studentList = document.getElementById('student-list');
+        studentList.classList.toggle('hidden');
+    });
+</script>
