@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountCreated;
 
 class RegistrationController extends Controller
 {
@@ -26,7 +28,9 @@ class RegistrationController extends Controller
 
         $data['password'] = Hash::make($data['password']);
 
-        User::create($data);
+        $user = User::create($data);
+
+        Mail::to($user->email)->send(new AccountCreated($user));
 
         return redirect('/');
     }
