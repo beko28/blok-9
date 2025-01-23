@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Timeslot;
+use App\Mail\StudentEnrolled;
+use App\Mail\StudentUnenrolled;
+use Illuminate\Support\Facades\Mail;
 
 class CourseController extends Controller
 {
@@ -134,7 +136,23 @@ public function updateStudents(Request $request, Course $course)
         'student_ids.*' => 'exists:users,id',
     ]);
 
+    $currentStudents = $course->students()->pluck('users.id')->toArray();
+
+    $newStudents = array_diff($request->student_ids ?? [], $currentStudents);
+
+    $removedStudents = array_diff($currentStudents, $request->student_ids ?? []);
+
     $course->students()->sync($request->input('student_ids', []));
+
+    foreach ($newStudents as $studentId) {
+        $student = User::find($studentId);
+        Mail::to($student->email)->send(new StudentEnrolled($course, $student));
+    }
+
+    foreach ($removedStudents as $studentId) {
+        $student = User::find($studentId);
+        Mail::to($student->email)->send(new StudentUnenrolled($course, $student));
+    }
 
     return redirect()->route('courses.show', $course->id)->with('success', 'Studenten succesvol bijgewerkt!');
 }
