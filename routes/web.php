@@ -12,6 +12,7 @@ use App\Http\Controllers\CourseOverviewController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TrialLessonController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\FeedbackController;
 
 
 Route::get('/', function () {
@@ -67,3 +68,7 @@ Route::get('/notifications', [NotificationController::class, 'getNotifications']
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/trial-lessons', [TrialLessonController::class, 'index'])->name('student.trial-lessons');
 });
+
+
+Route::post('/courses/{course}/feedback', [FeedbackController::class, 'store'])->name('courses.feedback.store');
+Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');

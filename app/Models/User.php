@@ -48,4 +48,9 @@ public function trialLessonsAsTeacher()
     return $this->hasMany(TrialLesson::class, 'teacher_id');
 }
 
+public function feedback()
+{
+    return $this->hasMany(Feedback::class, 'student_id');
+}
+
 }

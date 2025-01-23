@@ -9,14 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->string('text');
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
+            $table->text('feedback');
+            $table->integer('rating');
             $table->timestamps();
-            $table->integer('course_id')->nullable();
-            $table->integer('user_id')->nullable();
         });
     }
 

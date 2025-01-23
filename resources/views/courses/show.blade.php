@@ -18,12 +18,45 @@
         <div class="mt-4 bg-white shadow-md rounded-lg p-6">
             <ul class="list-disc list-inside text-gray-700">
                 @foreach ($course->students as $student)
-                    <li class="py-2"><strong>{{ $student->firstname }} {{ $student->surname }}</strong> - {{ $student->email }}</li>
+                    <li class="py-2"><strong>{{ $student->firstname }} {{ $student->surname }}</strong> - {{ $student->email }} <a href="{{ route('feedback.index') }}"><button class="mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600 transition">Feedback</button></a></li>
                 @endforeach
             </ul>
         </div>
+@if(auth()->user()->role === 'leraar')
+    <div class="mt-8 bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">📝 Geef Feedback</h3>
+        <form action="{{ route('courses.feedback.store', $course->id) }}" method="POST">
+            @csrf
+            <div class="mb-4">
+                <label for="student_id" class="block text-gray-700">Student:</label>
+                <select name="student_id" id="student_id" class="form-control">
+                    @foreach ($course->students as $student)
+                        <option value="{{ $student->id }}">{{ $student->firstname }} {{ $student->surname }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="feedback" class="block text-gray-700">Feedback:</label>
+                <textarea name="feedback" id="feedback" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="rating" class="block text-gray-700">Rating:</label>
+                <select name="rating" id="rating" class="form-control">
+                    <option value="1">1 (Needs Improvement)</option>
+                    <option value="2">2 (Satisfactory)</option>
+                    <option value="3">3 (Good)</option>
+                    <option value="4">4 (Excellent)</option>
+                    <option value="5">5 (Outstanding)</option>
+                </select>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition">Verstuur Feedback</button>
+        </form>
+    </div>
+@endif
     @endif
 
+
+    <!-- toevoegen en verwijderen van studenten -->
     <button id="toggle-student-list"
         class="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 transition">
         👥 Beheer Studenten
@@ -63,7 +96,6 @@
 
 @include('components.footer')
 
-<!-- ✅ JavaScript voor het tonen/verbergen van de studentenlijst -->
 <script>
     document.getElementById('toggle-student-list').addEventListener('click', function () {
         let studentList = document.getElementById('student-list');
